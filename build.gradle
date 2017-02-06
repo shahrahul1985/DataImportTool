@@ -5,7 +5,8 @@ buildscript {
 
     dependencies {
         classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.5.0',
-                  'com.bmuschko:gradle-tomcat-plugin:2.2.2'
+                  'com.bmuschko:gradle-tomcat-plugin:2.2.2',
+                  'org.codehaus.groovy:groovy-backports-compat23:2.3.5'
     }
 }
 
@@ -42,7 +43,8 @@ dependencies {
     providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
 
     compile    'com.google.code.gson:gson:2.2.4',
-               'org.apache.poi:poi:3.9'
+               'org.apache.poi:poi:3.9',
+			   'org.apache.poi:poi-ooxml:3.12'
 
      testCompile 'junit:junit:4.11',
                  'org.mockito:mockito-all:1.9.5'

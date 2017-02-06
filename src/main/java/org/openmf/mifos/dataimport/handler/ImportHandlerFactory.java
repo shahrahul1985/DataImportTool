@@ -18,6 +18,9 @@ import org.openmf.mifos.dataimport.handler.savings.SavingsDataImportHandler;
 import org.openmf.mifos.dataimport.handler.savings.SavingsTransactionDataImportHandler;
 import org.openmf.mifos.dataimport.http.MifosRestClient;
 
+import com.conflux.handler.reconciliation.BankReconcilationDataHandler;
+import com.conflux.handler.reconciliation.ExpenseApportionmentDataHandler;
+
 
 public class ImportHandlerFactory {
     
@@ -49,6 +52,8 @@ public class ImportHandlerFactory {
         	return new AddJournalEntriesHandler(workbook, new MifosRestClient());
         }else if(workbook.getSheetIndex("guarantor") == 0) {
         	return new AddGuarantorDataImportHandler(workbook, new MifosRestClient());
+        }else if(workbook.getSheetIndex("ExpenseApportionment") >= 0) {
+        	return new ExpenseApportionmentDataHandler(workbook);
         }
         
         

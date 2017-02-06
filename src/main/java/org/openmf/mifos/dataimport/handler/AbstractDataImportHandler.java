@@ -2,6 +2,7 @@ package org.openmf.mifos.dataimport.handler;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -12,6 +13,7 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.NumberToTextConverter;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -82,35 +84,39 @@ public abstract class AbstractDataImportHandler implements DataImportHandler {
     	if (c == null || c.getCellType() == Cell.CELL_TYPE_BLANK)
     		return 0.0;
     	FormulaEvaluator eval = row.getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator();
-    	if(c.getCellType() == Cell.CELL_TYPE_FORMULA) {
-    		CellValue val = null;
-    		try {
-    			val = eval.evaluate(c);
-    		} catch (NullPointerException npe) {
-    			return 0.0;
-    		}
-    		return val.getNumberValue();
-    	}
     	return row.getCell(colIndex).getNumericCellValue();
     }
 
     protected String readAsString(int colIndex, Row row) {
         try {
         	Cell c = row.getCell(colIndex);
-        	if (c == null || c.getCellType() == Cell.CELL_TYPE_BLANK)
+        	if (c == null || c.getCellType() == Cell.CELL_TYPE_BLANK )
         		return "";
-        	FormulaEvaluator eval = row.getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator();
-        	if(c.getCellType() == Cell.CELL_TYPE_FORMULA) {
-        		CellValue val = null;
-        		try {
-        			val = eval.evaluate(c);
-        		} catch(NullPointerException npe) {
-        			return "";
+        	String res = null;
+			if (c.getCellType() == Cell.CELL_TYPE_FORMULA) {
+				switch (c.getCachedFormulaResultType()) {
+				case Cell.CELL_TYPE_ERROR:
+					return "";
+				case Cell.CELL_TYPE_NUMERIC:
+					res = NumberToTextConverter.toText(c.getNumericCellValue());
+					break;
+				case Cell.CELL_TYPE_STRING:
+					res = c.getRichStringCellValue().getString();
+		             break;
+        		 }
+        	}else{
+        		switch(c.getCellType()){
+        		case Cell.CELL_TYPE_ERROR:
+					return "";
+				case Cell.CELL_TYPE_NUMERIC:
+					res = NumberToTextConverter.toText(c.getNumericCellValue());
+					break;
+				case Cell.CELL_TYPE_STRING:
+					res = c.getRichStringCellValue().getString();
+		             break;
         		}
-        		String res = trimEmptyDecimalPortion(val.getStringValue());
-        		return res.trim();
         	}
-        	String res = trimEmptyDecimalPortion(c.getStringCellValue().trim());
+        	//res = trimEmptyDecimalPortion(c.getStringCellValue().trim());        	        	
             return res.trim();
         } catch (Exception e) {
         	e.printStackTrace();
@@ -131,6 +137,18 @@ public abstract class AbstractDataImportHandler implements DataImportHandler {
     		if(c == null || c.getCellType() == Cell.CELL_TYPE_BLANK)
     			return "";
     		DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+            return dateFormat.format(c.getDateCellValue());
+    	}  catch  (Exception e) {
+    		return "";
+    	}
+    }
+    
+    protected String readAsDate(int colIndex, Row row, String format) {
+    	try{
+    		Cell c = row.getCell(colIndex);
+    		if(c == null || c.getCellType() == Cell.CELL_TYPE_BLANK)
+    			return "";
+    		DateFormat dateFormat = new SimpleDateFormat(format);
             return dateFormat.format(c.getDateCellValue());
     	}  catch  (Exception e) {
     		return "";
@@ -176,6 +194,13 @@ public abstract class AbstractDataImportHandler implements DataImportHandler {
     
     protected void writeString(int colIndex, Row row, String value) {
         row.createCell(colIndex).setCellValue(value);
+    }
+    
+    protected void writeDate(int colIndex, Row row, Date value, CellStyle cellStyle) {    	
+    	
+        Cell cell = row.createCell(colIndex);
+        cell.setCellValue(value);
+        cell.setCellStyle(cellStyle);
     }
     
     protected CellStyle getCellStyle(Workbook workbook, IndexedColors color) {

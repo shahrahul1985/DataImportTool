@@ -90,10 +90,10 @@ public class DataImportServlet extends HttpServlet {
         } else {
 //        for(String e : result.getErrors())
 //            logger.debug("Failed: " + e);
-        String fileName = "Re-Upload.xls";
-		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-Disposition", "attachment;filename="+fileName);
-        workbook.write(stream);
+		    String fileName = "Re-Upload.xls";
+			response.setContentType("application/vnd.ms-excel");
+			response.setHeader("Content-Disposition", "attachment;filename="+fileName);
+		    workbook.write(stream);
         }
         out.flush();
         out.close();

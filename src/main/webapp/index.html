@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Data Import Tool</title>
+<title>Bank Reconciliation Tool</title>
 <style>
 *{margin:0;padding:0;}
 body{font-family:Helvetica Neue, Arial, sans-serif;background: #EEE;}
@@ -22,7 +22,7 @@ fieldset {border: 0;margin: 0 0 15px 0;}
 </style>
 </head>
 <body>
-<div id="title">Data Import Tool</div>
+<div id="title">Bank Reconciliation Tool</div>
 
 <div id="container">
   <div id="content">
@@ -30,240 +30,21 @@ fieldset {border: 0;margin: 0 0 15px 0;}
 	<div class="step clearfix">
 		<div class="stepCount">Step 1 :</div>
 		<div class="stepContent">
-			<p>Enter your offices and staff through the front-end app provided with MifosX.</p>
+			<p>Fill up the Bank Excel Sheet</p>
 		</div>
 	</div>
 	
 	<div class="step clearfix">
 	  	<div class="stepCount">Step 2 :</div>
 	  	<div class="stepContent">
-		  	<p>Download template to help facilitate Clients Import.</p>
-		    <form method="get" action="download" >
-		     <input type="hidden" name="template" value="client" > 
-		     <fieldset>Select Client Type : &nbsp;&nbsp;
-		     <input type="radio" name="clientType" value="individual"> Individual &nbsp;&nbsp;
-		     <input type="radio" name="clientType" value="corporate"> Corporate </fieldset>
-		     <input type="submit" value="Download" class="btn" />
-		    </form>
-			<form method="post" action="import" enctype="multipart/form-data">
+		  	<p>Upload the Bank Reconciliation Sheet</p>
+		     <form method="post" action="reconciliation" enctype="multipart/form-data">
 		            <input type="file" name="file"/>
 		            <input type="submit" class="btn"/>
 			</form>
 		</div>
 	</div>
-	
-	<div class="step clearfix">
-		<div class="stepCount">Step 3:</div> 
-		<div class="stepContent">
-			<p>Download template to help facilitate Centers Import.</p>
-		    <form method="get" action="download" >
-		     <input type="hidden" name="template" value="centers" > 
-		     <input type="submit" value="Download" class="btn"  />
-		    </form>
-			<form method="post" action="import" enctype="multipart/form-data">
-		            <input type="file" name="file"/>
-		            <input type="submit" class="btn"/>
-			</form>
-		</div>
-	</div>
-	
-	<div class="step clearfix">
-		<div class="stepCount">Step 4:</div> 
-		<div class="stepContent">
-			<p>Download template to help facilitate Groups Import.</p>
-		    <form method="get" action="download" >
-		     <input type="hidden" name="template" value="groups" > 
-		     <input type="submit" value="Download" class="btn"  />
-		    </form>
-			<form method="post" action="import" enctype="multipart/form-data">
-		            <input type="file" name="file"/>
-		            <input type="submit" class="btn"/>
-			</form>
-		</div>
-	</div>	
-	
-	<div class="step clearfix">
-		<div class="stepCount">Step 5:</div> 
-		<div class="stepContent">
-			<p>
-			Enter your Currency Configuration, Funds, Charges, Loan Product configuration (Administration -&gt;
-			Organisation) and Payment Types (Administration -&gt; System -&gt; View Code -&gt; Add/Edit Code Value) 
-			 through the UI.</p>
-		</div>
-	</div>
-	
-	<div class="step clearfix">
-		<div class="stepCount">Step 6:</div>
-		<div class="stepContent">
-			<p>Download template to help facilitate Loan Import. </p>
-		    <p>For quick import of outstanding balances of each loan, use the entire template <b>OR</b> leave the last 3 columns empty and proceed to Step 5 for importing complete repayment history for each loan.</p>
-			<form method="get" action="download" >
-		     <input type="hidden" name="template" value="loan" > 
-		     <input type="submit" value="Download" class="btn"  />
-		    </form>
-		    <form method="post" action="import" enctype="multipart/form-data">
-		            <input type="file" name="file"/>
-		            <input type="submit" class="btn"/>
-			</form>
-		</div>
-	</div>
-	
-	<div class="step clearfix">
-	    <div class="stepCount">Step 7:<br/><span>(Optional)</span></div>
-	    <div class="stepContent">
-	    	<p>Download template to help facilitate import of Loan Repayment History.</p>
-		    <form method="get" action="download" >
-		     <input type="hidden" name="template" value="loanRepaymentHistory" > 
-		     <input type="submit" value="Download" class="btn"  />
-		    </form>
-		    <form method="post" action="import" enctype="multipart/form-data">
-		            <input type="file" name="file"/>
-		            <input type="submit" class="btn"/>
-			</form>
-		</div>
-	</div>
-	
-	<div class="step clearfix">
-		<div class="stepCount">Step 8:</div> 
-		<div class="stepContent">
-			<p>Enter your Savings Product configuration (Administration -&gt; Organisation) through the UI.</p>
-		</div>
-	</div>
-	
-	<div class="step clearfix">
-		<div class="stepCount">Step 9:</div> 
-		<div class="stepContent">
-			<p>Download template to help facilitate Savings Import. </p>
-		    <p>For quick import of current balances of each savings account, enter the current balance as Minimum Required Opening Balance
-		     <b>OR</b> proceed to Step 8 for importing complete transaction history for each savings account.</p>
-			<form method="get" action="download" >
-		     <input type="hidden" name="template" value="savings" > 
-		     <input type="submit" value="Download" class="btn"  />
-		    </form>
-		    <form method="post" action="import" enctype="multipart/form-data">
-		            <input type="file" name="file"/>
-		            <input type="submit" class="btn"/>
-			</form>
-		</div>
-	</div>
-	
-	<div class="step clearfix">
-	    <div class="stepCount">Step 10:<br/><span>(Optional)</span></div>
-	    <div class="stepContent">
-		    <p>Download template to help facilitate import of Savings Transaction History.</p>
-		    <form method="get" action="download" >
-		     <input type="hidden" name="template" value="savingsTransactionHistory" > 
-		     <input type="submit" value="Download" class="btn"  />
-		    </form>
-		    <form method="post" action="import" enctype="multipart/form-data">
-		            <input type="file" name="file"/>
-		            <input type="submit" class="btn"/>
-			</form>
-		</div>
-	</div>
-	
-	<div class="step clearfix">
-		<div class="stepCount">Step 11:</div> 
-		<div class="stepContent">
-			<p>Enter your Fixed Deposit Product configuration (Administration -&gt; Organisation) through the UI.</p>
-		</div>
-	</div>
-	
-	<div class="step clearfix">
-		<div class="stepCount">Step 12:</div> 
-		<div class="stepContent">
-			<p>Download template to help facilitate Fixed Deposit Import. </p>
-		    <form method="get" action="download" >
-		     <input type="hidden" name="template" value="fixedDeposit" > 
-		     <input type="submit" value="Download" class="btn"  />
-		    </form>
-		    <form method="post" action="import" enctype="multipart/form-data">
-		            <input type="file" name="file"/>
-		            <input type="submit" class="btn"/>
-			</form>
-		</div>
-	</div>
-	
-		<div class="step clearfix">
-		<div class="stepCount">Step 13:</div> 
-		<div class="stepContent">
-			<p>Enter your Recurring Deposit Product configuration (Administration -&gt; Organisation) through the UI.</p>
-		</div>
-	</div>
-	
-	<div class="step clearfix">
-		<div class="stepCount">Step 14:</div> 
-		<div class="stepContent">
-			<p>Download template to help facilitate Recurring Deposit Import. </p>
-		    <form method="get" action="download" >
-		     <input type="hidden" name="template" value="recurringDeposit" > 
-		     <input type="submit" value="Download" class="btn"  />
-		    </form>
-		    <form method="post" action="import" enctype="multipart/form-data">
-		            <input type="file" name="file"/>
-		            <input type="submit" class="btn"/>
-			</form>
-		</div>
-	</div>
-	
-	<div class="step clearfix">
-	    <div class="stepCount">Step 15:<br/><span>(Optional)</span></div>
-	    <div class="stepContent">
-		    <p>Download template to help facilitate import of Recurring Deposit Account Transaction  History.</p>
-		    <form method="get" action="download" >
-		     <input type="hidden" name="template" value="recurringDepositHistory" > 
-		     <input type="submit" value="Download" class="btn"  />
-		    </form>
-		    <form method="post" action="import" enctype="multipart/form-data">
-		            <input type="file" name="file"/>
-		            <input type="submit" class="btn"/>
-			</form>
-		</div>
-	</div>
-	<div class="step clearfix">
-	    <div class="stepCount">Step 16:<br/><span>(Optional)</span></div>
-	    <div class="stepContent">
-		    <p>Download template to help facilitate import of Closing of savings account.</p>
-		    <form method="get" action="download" >
-		     <input type="hidden" name="template" value="closingOfSavingsAccounts" > 
-		     <input type="submit" value="Download" class="btn"  />
-		    </form>
-		    <form method="post" action="import" enctype="multipart/form-data">
-		            <input type="file" name="file"/>
-		            <input type="submit" class="btn"/>
-			</form>
-		</div>
-	</div>
-	<div class="step clearfix">
-		<div class="stepCount">Step 17:</div> 
-		<div class="stepContent">
-			<p>Download template to help Add Journal Entries. </p>
-		    <form method="get" action="download" >
-		     <input type="hidden" name="template" value="journalentries" > 
-		     <input type="submit" value="Download" class="btn"  />
-		    </form>
-		    <form method="post" action="import" enctype="multipart/form-data">
-		            <input type="file" name="file"/>
-		            <input type="submit" class="btn"/>
-			</form>
-		</div>
-		</div>
-		<div class="step clearfix">
-		<div class="stepCount">Step :18</div> 
-		<div class="stepContent">
-			<p>Download template to help Add Guarantor. </p>
-		    <form method="get" action="download" >
-		     <input type="hidden" name="template" value="guarantor" > 
-		     <input type="submit" value="Download" class="btn"  />
-		    </form>
-		    <form method="post" action="import" enctype="multipart/form-data">
-		            <input type="file" name="file"/>
-		            <input type="submit" class="btn"/>
-			</form>
-		</div>
-		
-		
-	</div>
+
 	
 </div>
 </div>
